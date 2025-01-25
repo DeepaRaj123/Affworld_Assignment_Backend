@@ -3,6 +3,9 @@ const cloudinary = require('cloudinary').v2;
 const fs = require('fs'); // To clean up temporary files after upload
 const dotenv = require('dotenv');
 
+// Load environment variables
+dotenv.config();
+
 // Configure Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUDNAME, 
