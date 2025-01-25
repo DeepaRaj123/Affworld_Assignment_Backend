@@ -28,35 +28,18 @@ app.use((req, res, next) => {
   next();
 });
 
-// Enable CORS for frontend requests during development
-if (process.env.NODE_ENV === "development") {
-  app.use(
-    cors({
-      origin: "http://localhost:3000", // Frontend URL during development
-      methods: ["GET", "POST", "PUT", "DELETE"],
-      credentials: true, // Allow cookies if needed
-    })
-  );
-} else {
-  app.use(cors());
-}
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 // Register API routes BEFORE serving the frontend
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/posts", postRoutes);
 
-// Serve static files for frontend in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-  // Catch-all route for React frontend
-  app.get("*", (req, res, next) => {
-    if (req.path.startsWith("/api")) return next();
-    res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
-  });
-}
 
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+module.exports = app;
