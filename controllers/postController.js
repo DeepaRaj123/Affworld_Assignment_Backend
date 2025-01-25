@@ -27,6 +27,8 @@ const createPost = async (req, res) => {
             folder: 'posts', // Store images in a folder on Cloudinary
         });
 
+        console.log(result)
+
         // Create a post in the database
         const post = await Post.create({
             user: req.user.id, // Assumes `req.user` is set by an authentication middleware
